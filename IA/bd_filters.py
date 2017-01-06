@@ -1,10 +1,12 @@
+from bd_aiml import respond_from_aiml
+
 def get_yes_or_no_response(input):
     #TO DO
     return ''
 
 def get_personal_question_response(input):
     #TO DO
-    return ''
+    return respond_from_aiml(input)
 
 def get_choose_between_response(input):
     #TO DO
@@ -24,5 +26,5 @@ def get_math_question_response(input):
 
 def get_doubts_response(input):
     #TO DO
-    return ''
+    return respond_from_aiml(input)
 

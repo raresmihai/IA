@@ -9,12 +9,14 @@ from bd_filters import get_difference_between_response
 from bd_filters import get_info_about_response
 from bd_filters import get_math_question_response
 from bd_filters import get_doubts_response
+from bd_aiml import initialize_aiml_module
 
 class BD:
     def __init__(self):
         self.count = 0
         self.conversation_changers = conversation_changers
         self.personal_questions = personal_questions
+        initialize_aiml_module()
 
     #input = (filter, is_question_flag, keywords, input_phrase)
     def get_response(self,input):
