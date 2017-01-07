@@ -4,8 +4,12 @@ from scraping import get_response_from_web
 
 
 def get_yes_or_no_response(input):
-    # TO DO
-    return ''
+    answer = respond_from_aiml(input)
+    if answer == '':
+        answer = get_response_from_web(input)
+        if answer == '':
+            return 'no'
+    return 'yes'
 
 
 def get_personal_question_response(input):
@@ -31,8 +35,12 @@ def get_difference_between_response(input):
 
 
 def get_info_about_response(input):
-    # TO DO
-    return ''
+    answer = get_response_from_web(input)
+    if answer == '':
+        answer = respond_from_aiml(input)
+        if answer == '':
+            return 'I dont know'
+    return answer
 
 
 def get_math_question_response(input):
