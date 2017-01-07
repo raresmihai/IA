@@ -15,7 +15,8 @@ def get_personal_question_response(input):
 
 def get_choose_between_response(input):
     # TO DO
-    answer = get_response_from_web(input)
+    # I sent only the keywords and the phrase
+    answer = get_response_from_web(input[2:])
     if answer == "":
         answer = respond_from_aiml(input)
     return answer
@@ -25,7 +26,7 @@ def get_difference_between_response(input):
     # TO DO
     answer = respond_from_aiml(input)
     if answer == "":
-        answer = get_response_from_web(input)
+        answer = get_response_from_web(input[2:])
     return answer
 
 
