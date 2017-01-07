@@ -66,7 +66,7 @@ def get_answer_from_google(key_words, question):
     return answer
 
 
-def get_answer(input):
+def get_response_from_web(input):
     """
         Function that returns a response from web scrapping
     :param input: Input received from text processing
@@ -84,4 +84,4 @@ def get_answer(input):
 
 
 if __name__ == "__main__":
-    print("Raspuns=", get_answer(""))
+    print("Raspuns=", get_response_from_web(""))
