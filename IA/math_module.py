@@ -12,7 +12,7 @@ bot = ChatBot(
 
 
 def get_math_response(statement):
-    response = bot.get_response(statement)
+    response = "I'm not good at math. Sorry!"
     return response
 
 
