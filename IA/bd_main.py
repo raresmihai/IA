@@ -18,13 +18,13 @@ class BD:
         self.personal_questions = personal_questions
         initialize_aiml_module()
 
-    #input = (filter, is_question_flag, keywords, input_phrase)
+    #input = (filter, is_question_flag, synonyms, keywords, input_phrase)
     def get_response(self,input):
         self.count += 1
         is_question = input[1]
 
         if is_question:
-            self.find_response_by_filter(input)
+            return self.find_response_by_filter(input)
         else:
             #if there were at least 3 inputs from the user,
             #there is a 15% chance to change the conversation
