@@ -12,11 +12,11 @@ bot = ChatBot(
 
 
 def get_math_response(statement):
-    response = "I'm not good at math. Sorry!"
+    response = bot.get_response(statement).text
     return response
 
 
 if __name__ == "__main__":
     # Print an example of getting one math based response
-    response = bot.get_response("What is 4 + 9?")
+    response = bot.get_response("What is 4 + 9?").text
     print(response)
