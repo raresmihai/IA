@@ -40,7 +40,7 @@ class TestBD(TestCase):
 
     def test_get_response_for_math_filter(self):
         bd = self.bd
-        input_tuple = (5, True, [('', '')], [''], '')
+        input_tuple = (5, True, [('', '')], [''], 'What is (20 * 8 - 7) * 0?')
         print 'Math filter answer: ' + bd.get_response(input_tuple)
 
     def test_get_response_for_doubts_filter(self):
