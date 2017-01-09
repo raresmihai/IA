@@ -4,8 +4,9 @@ from collections import Counter
 import operator
 
 import duckduckgo
-from bs4 import BeautifulSoup
 from google import google
+from bs4 import BeautifulSoup
+
 
 def get_best_phrase(text, key_words):
     try:
@@ -22,36 +23,61 @@ def get_best_phrase(text, key_words):
         # list of number of occurences of keywords in phrase
         dict2 = []
         for i in text:
-
-            if i in string.punctuation:
+            if i in '.' or i in '!' or i in ';' or i in '|':
                 phrases1.append(phrase1)
                 phrase1 = ''
             else:
                 phrase1 += i
 
-        for i in phrases1:
-            temp = []
-            phrase2 = i.split()
-            for j in phrase2:
-                temp.append(j)
+        for i in range(len(phrases1)):
+            if phrases1[i] != '':
+                if not 65 <= ord(phrases1[i][0]) <= 90:
+                    phrases1[i] = ''
+                for j in phrases1[i]:
+                    if j in '?':
+                        phrases1[i] = ''
+                nums = [int(s) for s in phrases1[i].split() if s.isdigit()];
+                if len(nums) > 1:
+                    phrases1[i] = ''
 
-            phrases2.append(temp)
+        for i in phrases1:
+            if i != '':
+                temp = []
+                phrase2 = i.split()
+                # print phrase2
+                for j in phrase2:
+                    temp.append(j)
+                phrases2.append(temp)
+
+        for i in range(len(phrases2)):
+            for j in phrases2[i]:
+                if j.isupper():
+                    if len(j) > 4:
+                        phrases2[i] = []
 
         for i in range(len(phrases2)):
             dict1.append(dict(Counter(phrases2[i])))
         # max occurences
-        maxx = 0
+        for i in range(len(dict1)):
+            for key, value in dict1[i].iteritems():
+                if value > 1:
+                    dict1[i].clear()
+                    phrases2[i] = []
+                    break
 
+        maxx = 0
         for i in dict1:
             for j in key_words:
                 if j in i:
                     maxx += 1
             dict2.append(maxx)
             maxx = 0
+
         if not dict2:
             return ''
         index, value = max(enumerate(dict2), key=operator.itemgetter(1))
     except:
+        print 'except'
         return ''
     return str(' '.join(phrases2[index]).encode('utf-8').strip())
 
@@ -108,15 +134,7 @@ def google_results(search_string):
     return search_results
 
 
-def return_search_on_google(search_type, input_type, words_synonyms, key_words):
-    """
-    Example: return_search_on_google(0, True, [('president', 'politician')], ['abraham', 'lincoln'])
-    :param search_type:
-    :param input_type:
-    :param words_synonyms:
-    :param key_words:
-    :return:
-    """
+def return_search_on_google(search_type, input_type, words_synonyms, key_words, text):
     try:
         answer = ''
         search_string = ''
@@ -134,7 +152,9 @@ def return_search_on_google(search_type, input_type, words_synonyms, key_words):
         print search_string
         temp = all_words[:]
 
-        search_results_google = google_results(search_string)
+        search_results_google = google_results(text)
+        if not search_results_google:
+            search_results_google = google_results(search_string)
         if search_results_google:
             answer += get_best_phrase(get_text_from_html_page(search_results_google[0].link), all_words)
         if answer == '':
@@ -146,7 +166,11 @@ def return_search_on_google(search_type, input_type, words_synonyms, key_words):
                 answer += get_best_phrase(
                     get_text_from_html_page(duckduckgo_result(str)),
                     all_words)
+        print 'anwser='
         print answer
         return answer
     except:
         return ''
+
+
+return_search_on_google(0, True, [('', 'meaning')], ['life'], 'what is the meaning of life?')
